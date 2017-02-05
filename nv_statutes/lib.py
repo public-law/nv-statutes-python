@@ -1,13 +1,14 @@
 import bs4
 from bs4 import BeautifulSoup
-from toolz.recipes import partitionby
+
+
+# from toolz.recipes import partitionby
 
 
 def title_count(html_index: str) -> int:
     soup        = BeautifulSoup(html_index, 'html.parser')
-    tables      = soup.find_all('table')
-    main_table  = tables[1]
-    rows        = main_table.find_all('tr')
+    table       = soup.find_all('table')[1]
+    rows        = table.find_all('tr')
     header_rows = list(filter(is_header_row, rows))
     return len(header_rows)
 
