@@ -14,9 +14,13 @@ def title_count(html_index: str) -> int:
     return len(header_rows)
 
 
-def titles(html_index: str):
-    tuples      = rowTuples(contentRows(html_index))
-    return []
+def titles(html_index: str) -> [Title]:
+    tuples = rowTuples(contentRows(html_index))
+    return list(map(newTitleFromTuple, tuples))
+
+
+def newTitleFromTuple(aTuple) -> Title:
+    return Title(name='', number=0, chapters=[])
 
 
 def contentRows(html_index: str):
@@ -26,7 +30,7 @@ def contentRows(html_index: str):
 
 
 def rowTuples(rows):
-    list(partitionby(is_header_row, rows))
+    return list(partitionby(is_header_row, rows))
 
 
 def is_header_row(row: bs4.element.Tag) -> bool:
