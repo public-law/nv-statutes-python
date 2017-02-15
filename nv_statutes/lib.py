@@ -23,8 +23,9 @@ def titles(html_index: str) -> Iterable[Title]:
 
 def newTitleFromTuple(aTuple) -> Title:
     titleRow = aTuple[0][0]
-    name   = BeautifulSoup.getText(titleRow.find('b')).split('—')[1].strip()
-    number = int(BeautifulSoup.getText(titleRow.find('b')).split('—')[0].strip().split()[1])
+    raw_number, raw_name = BeautifulSoup.getText(titleRow.find('b')).split('—')
+    name   = raw_name.strip()
+    number = int(raw_number.strip().split()[1])
     return Title(name=name, number=number, chapters=[])
 
 
