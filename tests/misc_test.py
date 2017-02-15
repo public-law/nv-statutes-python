@@ -1,13 +1,17 @@
+import pytest
+
 import nv_statutes.lib
 
 
-def test_finds_the_correct_number_of_titles():
+@pytest.fixture
+def titles():
     index_html = open("../nrs.html").read()
-    titles = nv_statutes.lib.titles(index_html)
+    return nv_statutes.lib.titles(index_html)
+
+
+def test_finds_the_correct_number_of_titles(titles):
     assert len(titles) == 59
 
 
-def test_titles_gets_the_first_titles_name():
-    index_html = open("../nrs.html").read()
-    titles = nv_statutes.lib.titles(index_html)
+def test_titles_gets_the_first_titles_name(titles):
     assert titles[0].name == "STATE JUDICIAL DEPARTMENT"
