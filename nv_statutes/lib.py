@@ -1,7 +1,9 @@
 from collections import namedtuple
+from typing import Iterable
 
 import bs4
 from bs4 import BeautifulSoup
+from toolz.itertoolz import partition
 from toolz.recipes import partitionby
 
 Title   = namedtuple('Title', ['name', 'number', 'chapters'])
@@ -14,13 +16,15 @@ def title_count(html_index: str) -> int:
     return len(header_rows)
 
 
-def titles(html_index: str) -> [Title]:
+def titles(html_index: str) -> Iterable[Title]:
     tuples = rowTuples(contentRows(html_index))
     return list(map(newTitleFromTuple, tuples))
 
 
 def newTitleFromTuple(aTuple) -> Title:
-    return Title(name='', number=0, chapters=[])
+    titleRow = aTuple[0][0]
+    name = titleRow.find('b')
+    return Title(name=name, number=0, chapters=[])
 
 
 def contentRows(html_index: str):
@@ -30,7 +34,8 @@ def contentRows(html_index: str):
 
 
 def rowTuples(rows):
-    return list(partitionby(is_header_row, rows))
+    result = list(partitionby(is_header_row, rows))
+    return partition(2, result[1:])  # Skip Chapter 0
 
 
 def is_header_row(row: bs4.element.Tag) -> bool:
