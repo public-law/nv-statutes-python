@@ -1,13 +1,21 @@
-from collections import namedtuple
-from typing import Iterable
+from typing import Iterable, NamedTuple
 
 import bs4
 from bs4 import BeautifulSoup
 from toolz.itertoolz import partition
 from toolz.recipes import partitionby
 
-Title   = namedtuple('Title', ['name', 'number', 'chapters'])
-Chapter = namedtuple('Chapter', ['name', 'number', 'url'])
+
+class Chapter(NamedTuple):
+    name: str
+    number: str
+    url: str
+
+class Title(NamedTuple):
+    name: str
+    number: int
+    chapters: Iterable[Chapter]
+
 
 
 def title_count(html_index: str) -> int:

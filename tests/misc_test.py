@@ -13,9 +13,9 @@ def test_finds_the_correct_number_of_titles(titles):
     assert len(titles) == 59
 
 
-def test_titles_gets_a_titles_name(titles):
+def test_gets_a_titles_name(titles):
     assert titles[0].name == "STATE JUDICIAL DEPARTMENT"
 
 
-def test_titles_gets_a_titles_number(titles):
+def test_gets_a_titles_number(titles):
     assert titles[0].number == 1
