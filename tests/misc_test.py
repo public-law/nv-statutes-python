@@ -3,7 +3,7 @@ import pytest
 import nv_statutes.lib
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def titles():
     index_html = open("../nrs.html").read()
     return nv_statutes.lib.titles(index_html)
